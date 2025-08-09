@@ -20,6 +20,10 @@ inputs:
     description: 'The language to use for the AI service.'
     required: false
     default: 'en'
+  exclude:
+    description: 'Comma-separated list of file patterns to exclude from review.'
+    required: false
+    default: ''
 
 runs:
   using: 'docker'
