@@ -290,7 +290,7 @@ def analyze_hunks(
             review_result: ReviewResult = result.output
 
             # Log summary if provided
-            if review_result.summary:
+            i review_result.summary:
                 print(f"Summary: {review_result.summary}")
 
             # Process review items
