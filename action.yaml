@@ -1,0 +1,31 @@
+name: 'AI Reviewer'
+description: 'Use AI to automatically review and comment on GitHub pull requests.'
+author: 'DJJ'
+
+inputs:
+  github-token:
+    description: 'The GitHub token to use for API requests.'
+    required: true
+  api-key:
+    description: 'The API key for the AI service.'
+    required: true
+  base-url:
+    description: 'The base URL for the AI service.'
+    required: true
+  model:
+    description: 'The AI model to use.'
+    required: false
+    default: 'gpt-4o'
+  language:
+    description: 'The language to use for the AI service.'
+    required: false
+    default: 'en'
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+
+branding:
+  icon: 'tag'
+  color: 'blue'
+
