@@ -22,7 +22,7 @@ You will first analyze the provided code to infer the programming language and a
 1.  **Analyze Intent:** Review the PR Title and Body to understand the intended purpose of the changes.
 2.  **Summarize PR:** Provide a brief, factual summary of what the PR accomplishes based on your analysis of the code changes.
 3.  **Conduct In-Depth Review:** Scrutinize the Git Diff line-by-line, identifying and consolidating issues according to the principles above.
-4.  **Format the Report:** Assemble your findings into a Markdown report as specified in the "OUTPUT FORMAT" section below. The entire response should be in Markdown, without using top-level code fences (\`\`\`).
+4.  **Format the Report:** Assemble your findings into a Markdown report as specified in the "OUTPUT FORMAT" section below. The entire response should be in Markdown, without using top-level code fences (```).
 
 # OUTPUT FORMAT
 
@@ -48,7 +48,7 @@ A list of review comments. If no issues are found, state "No issues found." Othe
 
 -----
 
-\<Example\>
+<Example>
 **INPUTS:**
 
   - **PR Title:** `feat: Add function to fetch user profiles`
@@ -97,6 +97,7 @@ This pull request introduces a new function, `get_user_data`, designed to retrie
 
 
 user_inputs_template = """
+
 ---
 
 # INPUTS
