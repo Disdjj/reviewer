@@ -11,6 +11,23 @@ from pydantic_ai.models.openai import OpenAIModel
 from pydantic_ai.providers.openai import OpenAIProvider
 from unidiff import PatchSet
 
+# Read environment variables
+github_token = (
+    os.environ.get("INPUT_GITHUB_TOKEN") or
+    os.environ.get("INPUT_GITHUB-TOKEN") or
+    os.environ.get("GITHUB_TOKEN")
+)
+api_key = (
+    os.environ.get("INPUT_API_KEY") or
+    os.environ.get("INPUT_API-KEY") or
+    os.environ.get("API_KEY")
+)
+base_url = os.environ.get("INPUT_BASE_URL") or os.environ.get("INPUT_BASE-URL")
+model_name = os.environ.get("INPUT_MODEL", "gpt-4o")
+language = os.environ.get("INPUT_LANGUAGE", "en")
+repo_full_name = os.environ.get("GITHUB_REPOSITORY")
+event_path = os.environ.get("GITHUB_EVENT_PATH")
+event_name = os.environ.get("GITHUB_EVENT_NAME")
 
 @dataclass
 class PRDetails:
@@ -102,7 +119,7 @@ def get_pr_diff(gh: Github, pr_details: PRDetails) -> str:
 
     api_url = f"https://api.github.com/repos/{pr_details.owner}/{pr_details.repo}/pulls/{pr_details.pull_number}"
     headers = {
-        'Authorization': f'Bearer {gh.auth.token if hasattr(gh, 'auth') and hasattr(gh.auth, 'token') else os.environ.get("GITHUB_TOKEN")}',
+        'Authorization': f'Bearer {github_token}',
         'Accept': 'application/vnd.github.v3.diff'
     }
 
@@ -366,24 +383,6 @@ def submit_review(
 
 def main():
     """Main entry point for the reviewer"""
-    # Read environment variables
-    github_token = (
-        os.environ.get("INPUT_GITHUB_TOKEN") or
-        os.environ.get("INPUT_GITHUB-TOKEN") or
-        os.environ.get("GITHUB_TOKEN")
-    )
-    api_key = (
-        os.environ.get("INPUT_API_KEY") or
-        os.environ.get("INPUT_API-KEY") or
-        os.environ.get("API_KEY")
-    )
-    base_url = os.environ.get("INPUT_BASE_URL") or os.environ.get("INPUT_BASE-URL")
-    model_name = os.environ.get("INPUT_MODEL", "gpt-4o")
-    language = os.environ.get("INPUT_LANGUAGE", "en")
-    repo_full_name = os.environ.get("GITHUB_REPOSITORY")
-    event_path = os.environ.get("GITHUB_EVENT_PATH")
-    event_name = os.environ.get("GITHUB_EVENT_NAME")
-
     # Validate required inputs
     if not github_token:
         print("❌ Missing GitHub token (GITHUB_TOKEN)")
