@@ -1,0 +1,25 @@
+name: Update Badges
+
+on:
+  workflow_run:
+    workflows: ["CI", "Docker Build and Push", "AI Code Review"]
+    types:
+      - completed
+  schedule:
+    - cron: '0 0 * * *'  # 每天更新一次
+
+jobs:
+  update-badges:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Update README badges
+      run: |
+        echo "Badges are automatically displayed by GitHub"
+        echo "No action needed - badges update in real-time"
+        echo "CI Status: ${{ github.event.workflow_run.conclusion }}"

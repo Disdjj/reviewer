@@ -1,0 +1,30 @@
+name: AI Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+  issue_comment:
+    types: [created]
+
+jobs:
+  ai-review:
+    # 仅在 PR 上运行（包括 PR 评论触发）
+    if: |
+      github.event_name == 'pull_request' ||
+      (github.event.issue.pull_request && contains(github.event.comment.body, '/review'))
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: AI Code Review
+        uses: Disdjj/reviewer@v1.0.1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          api-key: ${{ secrets.AI_API_KEY }}
+          base-url: ${{ secrets.AI_BASE_URL }}
+          model: gpt-5
+          language: 简体中文  # 使用中文评论
+          exclude: "*.lock,*.json,*.md,*.txt,*.yaml,*.yml,Dockerfile,LICENSE"  # 排除非代码文件

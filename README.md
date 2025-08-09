@@ -114,9 +114,28 @@ AI Reviewer 会重点关注以下方面：
 - **代码质量**：可读性、可维护性、命名规范、复杂度
 - **最佳实践**：是否遵循语言和框架的最佳实践
 
+### 📦 项目状态
+
+<p align="center">
+  <img src="https://github.com/Disdjj/reviewer/workflows/CI/badge.svg" alt="CI Status">
+  <img src="https://github.com/Disdjj/reviewer/workflows/Docker%20Build%20and%20Push/badge.svg" alt="Docker Build">
+  <img src="https://github.com/Disdjj/reviewer/workflows/AI%20Code%20Review/badge.svg" alt="AI Review">
+</p>
+
+本项目使用 GitHub Actions 进行持续集成和部署：
+- **代码质量**: 自动运行 linting、格式化和类型检查
+- **测试**: 在多个 Python 版本上运行测试套件
+- **Docker**: 自动构建和发布多平台镜像
+- **AI 审查**: 使用自身进行代码审查（自举）
+
 ### 🤝 贡献
 
 欢迎贡献！请查看 [贡献指南](CONTRIBUTING.md) 了解详情。
+
+本项目已配置：
+- 自动依赖更新 (Dependabot)
+- AI 代码审查
+- 完整的 CI/CD 流程
 
 ### 📄 许可证
 
@@ -229,9 +248,28 @@ AI Reviewer focuses on the following aspects:
 - **Code Quality**: Readability, maintainability, naming conventions, complexity
 - **Best Practices**: Following language and framework best practices
 
+### 📦 Project Status
+
+<p align="center">
+  <img src="https://github.com/Disdjj/reviewer/workflows/CI/badge.svg" alt="CI Status">
+  <img src="https://github.com/Disdjj/reviewer/workflows/Docker%20Build%20and%20Push/badge.svg" alt="Docker Build">
+  <img src="https://github.com/Disdjj/reviewer/workflows/AI%20Code%20Review/badge.svg" alt="AI Review">
+</p>
+
+This project uses GitHub Actions for continuous integration and deployment:
+- **Code Quality**: Automated linting, formatting, and type checking
+- **Testing**: Test suite runs on multiple Python versions
+- **Docker**: Automated multi-platform image builds and publishing
+- **AI Review**: Self-reviewing with AI (bootstrapping)
+
 ### 🤝 Contributing
 
 Contributions are welcome! Please see [Contributing Guide](CONTRIBUTING.md) for details.
+
+This project is configured with:
+- Automated dependency updates (Dependabot)
+- AI code review
+- Complete CI/CD pipeline
 
 ### 📄 License
 
