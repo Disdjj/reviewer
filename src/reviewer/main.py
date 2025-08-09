@@ -218,10 +218,10 @@ def parse_diff_manual(diff_text: str) -> List[HunkContext]:
 
 def build_prompt(pr_details: PRDetails, hunk_context: HunkContext, language: str) -> str:
     """Build review prompt using template from prompts.py"""
-    from .prompts import reviewer_prompt
+    from .prompts import reviewer_prompt, user_inputs_template
 
     # Format the prompt with context
-    prompt = reviewer_prompt.format(
+    prompt = reviewer_prompt + user_inputs_template.format(
         pr_title=pr_details.title,
         pr_body=pr_details.description or "No description provided",
         git_diff=hunk_context.hunk_content

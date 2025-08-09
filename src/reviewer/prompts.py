@@ -93,7 +93,10 @@ This pull request introduces a new function, `get_user_data`, designed to retrie
 </Example>
 
 ```
+"""
 
+
+user_inputs_template = """
 ---
 
 # INPUTS
