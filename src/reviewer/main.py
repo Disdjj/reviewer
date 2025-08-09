@@ -1,11 +1,21 @@
+import fnmatch
 import json
 import os
-import fnmatch
-from typing import Any, Dict, List, Optional, Tuple
-from dataclasses import dataclass
+from typing import (
+    Any,
+    Dict,
+    List,
+    Optional,
+)
 
-from github import Github, GithubException
-from pydantic import BaseModel, Field, ValidationError
+from github import (
+    Github,
+    GithubException,
+)
+from pydantic import (
+    BaseModel,
+    Field,
+)
 from pydantic_ai import Agent
 from pydantic_ai.models.openai import OpenAIModel
 from pydantic_ai.providers.openai import OpenAIProvider
@@ -29,8 +39,8 @@ repo_full_name = os.environ.get("GITHUB_REPOSITORY")
 event_path = os.environ.get("GITHUB_EVENT_PATH")
 event_name = os.environ.get("GITHUB_EVENT_NAME")
 
-@dataclass
-class PRDetails:
+
+class PRDetails(BaseModel):
     """Pull Request details"""
     owner: str
     repo: str
@@ -39,8 +49,7 @@ class PRDetails:
     description: Optional[str]
 
 
-@dataclass
-class HunkContext:
+class HunkContext(BaseModel):
     """Context for a single diff hunk"""
     file_path: str
     hunk_content: str
@@ -159,11 +168,12 @@ def parse_diff_with_positions(diff_text: str) -> List[HunkContext]:
                 hunk_lines.append(f"{line.line_type}{line.value}")
 
             if hunk_lines:
-                hunks_with_context.append(HunkContext(
-                    file_path=patched_file.path,
-                    hunk_content="\n".join(hunk_lines),
-                    start_position=hunk_start_position
-                ))
+                hunks_with_context.append(
+                    HunkContext(
+                        file_path=patched_file.path,
+                        hunk_content="\n".join(hunk_lines),
+                        start_position=hunk_start_position
+                    ))
 
             # Update position: header + content lines
             position += 1 + len(hunk_lines)
@@ -202,11 +212,12 @@ def parse_diff_manual(diff_text: str) -> List[HunkContext]:
                 position += 1
 
             if hunk_lines:
-                hunks_with_context.append(HunkContext(
-                    file_path=current_file,
-                    hunk_content="\n".join(hunk_lines),
-                    start_position=hunk_start_position
-                ))
+                hunks_with_context.append(
+                    HunkContext(
+                        file_path=current_file,
+                        hunk_content="\n".join(hunk_lines),
+                        start_position=hunk_start_position
+                    ))
             continue
 
         i += 1
@@ -218,7 +229,10 @@ def parse_diff_manual(diff_text: str) -> List[HunkContext]:
 
 def build_prompt(pr_details: PRDetails, hunk_context: HunkContext, language: str) -> str:
     """Build review prompt using template from prompts.py"""
-    from .prompts import reviewer_prompt, user_inputs_template
+    from .prompts import (
+        reviewer_prompt,
+        user_inputs_template,
+    )
 
     # Format the prompt with context
     prompt = reviewer_prompt + user_inputs_template.format(
@@ -290,11 +304,12 @@ def analyze_hunks(
 
                 position = hunk.start_position + (item.line_number - 1)
 
-                review_comments.append({
-                    "path": hunk.file_path,
-                    "position": position,
-                    "body": f"**[{item.severity.upper()}]** {item.review_comment}"
-                })
+                review_comments.append(
+                    {
+                        "path": hunk.file_path,
+                        "position": position,
+                        "body": f"**[{item.severity.upper()}]** {item.review_comment}"
+                    })
 
         except Exception as e:
             print(f"Error analyzing {hunk.file_path}: {e}")
@@ -454,4 +469,5 @@ def main():
 
 if __name__ == "__main__":
     import sys
+
     sys.exit(main())
