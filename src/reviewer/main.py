@@ -112,25 +112,6 @@ def get_pr_details(gh: Github, repo_full_name: str, event: Dict[str, Any]) -> PR
         description=pr.body
     )
 
-
-def get_pr_diff(gh: Github, pr_details: PRDetails) -> str:
-    """Fetch PR diff using GitHub API"""
-    import requests
-
-    api_url = f"https://api.github.com/repos/{pr_details.owner}/{pr_details.repo}/pulls/{pr_details.pull_number}"
-    headers = {
-        'Authorization': f'Bearer {github_token}',
-        'Accept': 'application/vnd.github.v3.diff'
-    }
-
-    response = requests.get(f"{api_url}.diff", headers=headers)
-
-    if response.status_code == 200:
-        return response.text
-    else:
-        raise RuntimeError(f"Failed to get diff. Status: {response.status_code}, Response: {response.text}")
-
-
 def parse_diff_with_positions(diff_text: str) -> List[HunkContext]:
     """Parse diff using unidiff and calculate GitHub positions"""
     hunks_with_context = []
