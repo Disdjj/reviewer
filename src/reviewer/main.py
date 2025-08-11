@@ -421,19 +421,10 @@ def main():
         print(f"🚫 Exclude patterns: {exclude_patterns}")
 
     try:
-        # Initialize GitHub client
-        gh = Github(github_token)
-
-        # Load event and get PR details
-        event = load_event(event_path)
-        pr_details = get_pr_details(gh, repo_full_name, event)
-
-        print(f"🔍 Reviewing PR #{pr_details.pull_number}: {pr_details.title}")
 
         # Get diff
         diff_text = get_pr_diff(gh, pr_details)
         if not diff_text:
-            print("⚠️ No diff found")
             return 0
 
         # Parse diff into hunks
